@@ -1,0 +1,34 @@
+program ::= number | variable
+    Assign 	| assign variable := expression; program
+    Show 	| show expression
+    For 	| for variable to term program; program
+    If 		| if formula program; program
+    While 	| while expression program; program
+    Empty 	|
+
+expression ::= term | formula | [ elements ]
+
+elements ::= expression
+    | expression, elements
+
+formula ::= true | false
+    And 	| formula and formula
+    Or 		| formula or formula
+    Not 	| not formula
+    GT 		| term gt term
+    LT 		| term lt  term
+    GTE 	| term gte term
+    LTE 	| term lte term
+    Equals 	| term eq term
+
+term ::= number
+    | variable
+    Plus 	| term + term
+    Minus 	| term - term
+    Mult 	| term * term
+    Div 	| term / term
+    Power 	| term ** term
+    Mod 	| term % term
+
+variable ::= [a-z][A-Za-z]*
+number ::= (0[1-9][0-9]*)
