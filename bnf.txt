@@ -19,10 +19,9 @@ formula ::= true | false
     LT 		| term lt  term
     GTE 	| term gte term
     LTE 	| term lte term
-    Equals 	| term eq term
+    Eq	    | term eq term
 
-term ::= number
-    | variable
+term ::= number | variable
     Plus 	| term + term
     Minus 	| term - term
     Mult 	| term * term
