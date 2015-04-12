@@ -1,6 +1,6 @@
 ﻿<html>
 <head>
-    <title>Testing Bridge Language</title>
+    <title>Bridge Website</title>
     <h2 align="center">Welcome to Bridge!</h2>
     <style type="text/css">
         body {
@@ -40,52 +40,8 @@
     <script src="uxadt.js"></script>
     <script src="imparse.js"></script>
     <script src="default.js"></script>
+
     <script>
-        /*var I = imparse;
-        var grammar =
-          I.Grammar([
-            I.Production('Formula', [
-              I.Choices([
-                I.Choice('And', I.AssocNone(), [
-                  I.Nonterminal('Formula'), I.Terminal('and'), I.Nonterminal('Formula')
-                ]),
-                I.Choice('Or', I.AssocNone(), [
-                  I.Nonterminal('Formula'), I.Terminal('or'), I.Nonterminal('Formula')
-                ]),
-                I.Choice('Equal', I.AssocNone(), [
-                  I.Nonterminal('Number'), I.Terminal('=='), I.Nonterminal('Number')
-                ]),
-                I.Choice('Not', I.AssocNone(), [
-                  I.Terminal('not'), I.Nonterminal('Formula')
-                ]),
-                I.Choice('True', I.AssocNone(), [
-                  I.Terminal('true')
-                ]),
-                I.Choice('False', I.AssocNone(), [
-                  I.Terminal('false')
-                ]),
-              ]),
-            ]),
-            I.Production('Number', [
-              I.Choices([
-                I.Choice('Plus', I.AssocNone(), [
-                  I.Nonterminal('Number'), I.Terminal('+'), I.Nonterminal('Number')
-                ]),
-                I.Choice('Minus', I.AssocNone(), [
-                  I.Nonterminal('Number'), I.Terminal('-'), I.Nonterminal('Number')
-                ]),
-                I.Choice('Number', I.AssocNone(), [
-                  I.RegExpr('(0|[1-9][0-9]*)')
-                ]),
-                I.Choice('Mult', I.AssocNone(), [
-                    I.Nonterminal('Number'), I.Terminal('*'), I.Nonterminal('Number')
-                ]),
-                I.Choice('Divide', I.AssocNone(), [
-                    I.Nonterminal('Number'), I.Terminal('/'), I.Nonterminal('Number')
-                ]),
-              ]),
-            ]),
-          ]);*/
 
         var procBNF = function () {
             var str = document.getElementById('bnf_input').value;
@@ -104,13 +60,150 @@
             }
         };
 
-        
+        var eval = function() {
+            var str = document.getElementById('parser_output').value;
+            alert(str);
+        };
+
+        /*
+
+        Name: interpret.js
+        Author: Vidhu Nath
+        Description: This JS file contains the interpreter for the Bridge
+            language and calls upon uxadt.js to operate.
+
+      
+
+        // THINGS TO DO STILL::
+        //
+        // include imports of uxadt.js
+        // no direct import allowed in js, might need to include
+        // via jquery or through html
+
+        // set the initial type
+        var _ = null;
+
+        // container for the langauge
+        uxadt._({
+            Number: [],
+            Variable: [],
+            PLus: [_,_],
+            Minus: [_,_],
+            Mult: [_,_],
+            Div: [_,_],
+            Power: [_,_],
+            Mod: [_,_],
+            True: [],
+            False: [],
+            And: [_,_],
+            Or: [_,_],
+            Not: [_],
+            GT: [_,_],
+            LT: [_,_]
+            GTE: [_,_],
+            LTE: [_,_],
+            Eq: [_,_],
+        });
+
+        // evaluate the terminals and non-terminals in term
+        var eval_term = function(e) {
+            if (e._(Number(_))) {
+                [n] = e.matched();
+                return n;
+            }
+
+            if (e._(Plus(_,_))) {
+                [e1, e2] = e.matched();
+                return eval_term(e1) + eval_term(e2);
+            }
+
+            if (e._(Minus(_,_))) {
+                [e1, e2] = e.matched();
+                return eval_term(e1) - eval_term(e2);
+            }
+
+            if (e._(Mult(_,_))) {
+                [e1, e2] = e.matched();
+                return eval_term(e1) * eval_term(e2);
+            }
+
+            if (e._(Div(_,_))) {
+                [e1, e2] = e.matched();
+                return eval_term(e1) / eval_term(e2);
+            }
+
+            if (e._(Power(_,_))) {
+                [e1, e2] = e.matched();
+                return Math.pow(eval_term(e1), eval_term(e2));
+            }
+
+            if (e._(Mod(_,_))) {
+                [e1, e2] = e.matched();
+                return eval_term(e1) % eval_term(e2);
+            }
+        }
+
+        // evaluate the terminals and non-terminals in formula
+        var eval_formula = function(e) {
+            if (e._(True(_))) {
+                [n] = e.matched();
+                return n
+            }
+
+            if (e._(False(_))) {
+                [n] = e.matched();
+                return n
+            }
+
+            if (e._(And(_,_))) {
+                [e1, e2] = e.matched();
+                return eval_formula(e1) && eval_formula(e2);
+            }
+
+            if (e._(Or(_,_))) {
+                [e1, e2] = e.matched();
+                return eval_formula(e1) || eval_formula(e2);
+            }
+
+            if (e._(Not(_))) {
+                [e1] = e.matched();
+                return !eval_formula(e1);
+            }
+
+            if (e._(GT(_,_))) {
+                [e1, e2] = e.matched();
+                return eval_formula(e1) > eval_formula(e2);
+            }
+
+            if (e._(LT(_,_))) {
+                [e1, e2] = e.matched();
+                return eval_formula(e1) < eval_formula(e2);
+            }
+
+            if (e._(GTE(_,_))) {
+                [e1, e2] = e.matched();
+                return eval_formula(e1) >= eval_formula(e2);
+            }
+
+            if (e._(LTE(_,_))) {
+                [e1, e2] = e.matched();
+                return eval_formula(e1) <= eval_term(e2);
+            }
+
+            // not sure if need "==" or "==="
+            if (e._(Equal(_,_))) {
+                [e1, e2] = e.matched();
+                return eval_formula(e1) === eval_formula(e2);
+            }
+        };*/
+
+
 
     </script>
 
 </head>
 <body onload="document.getElementById('bnf_output1').innerHTML = I.printUxadtGrammar(grammar);">
-    <h4>BNF to UxADT</h4>
+    <h3 align="center">BNF to UxADT</h3>
     <table>
         <tr>
             <td>
@@ -137,22 +230,25 @@ Term ::=
     Number | $(0|[1-9][0-9]*)$
     Variable | $([a-z][A-Za-z]*)$
                 </textarea>
+
                 <br>
                 <button onclick="procBNF();">Generate UxADT</button>
             </td>
             <td>
                 <pre id="bnf_output1"></pre>
-            </td>
-        </tr>
+            </td></tr>
     </table>
 
     <br>
-    <h3>Parser</h3>
+
+    <h3 align="center">Parser</h3>
     <table>
         <tr>
             <td>
-                <textarea rows="10" cols="40" id="parser_input">true or false and 1 + 1 == 2 - 2 + 3</textarea>
+                <textarea rows="5" cols="10" id="parser_input">true or false and 1 + 1 == 2 - 2 + 3</textarea>
+
                 <br>
+
                 <button onclick="procParse();">Parse</button>
                 <br>
                 <div id="parser_timer"></div>
@@ -162,5 +258,24 @@ Term ::=
             </td>
         </tr>
     </table>
+
+    <br>
+
+    <h3 align="center">Output</h3>
+    <TABLE>
+        <tr>
+            <button  onclick="eval();">Process</button>
+            <br>
+            <div id="interpret_timer"></div>
+        </tr>
+        <tr>
+            <td>
+                <div align="center">
+                    <pre align="center" id="interpreter_output"></pre>
+                </div>
+            </td>
+        </tr>
+    </TABLE>
+
 </body>
 </html>
