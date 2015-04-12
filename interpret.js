@@ -1,10 +1,22 @@
+/*
+
+Name: interpret.js
+Author: Vidhu Nath
+Description: This JS file contains the interpreter for the Bridge
+	language and calls upon uxadt.js to operate.
+
+*/
+
+// THINGS TO DO STILL::
+//
 // include imports of uxadt.js
 // no direct import allowed in js, might need to include
 // via jquery or through html
 
+// set the initial type
 var _ = null;
 
-// interpret for term
+// container for the langauge
 uxadt._({
 	Number: [],
 	Variable: [],
@@ -26,6 +38,7 @@ uxadt._({
 	Eq: [_,_],
 });
 
+// evaluate the terminals and non-terminals in term
 function eval_term(e) {
 	if (e._(Number(_))) {
 		[n] = e.matched();
@@ -63,6 +76,7 @@ function eval_term(e) {
 	}
 }
 
+// evaluate the terminals and non-terminals in formula
 function eval_formula(e) {
 	if (e._(True(_))) {
 		[n] = e.matched();
