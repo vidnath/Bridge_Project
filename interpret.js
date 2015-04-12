@@ -123,8 +123,10 @@ function eval_formula(e) {
 		return eval_formula(e1) <= eval_term(e2)
 	}
 
-	if (e._(Eq(_,_))) {
+	// not sure if need "==" or "==="
+	if (e._(Equal(_,_))) {
 		[e1, e2] = e.matched();
 		return eval_formula(e1) === eval_formula(e2)
 	}
 }
+

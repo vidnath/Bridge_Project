@@ -19,7 +19,7 @@ formula ::= true | false
     LT 		| term lt  term
     GTE 	| term gte term
     LTE 	| term lte term
-    Eq	    | term eq term
+    Equal   | term == term
 
 term ::= number | variable
     Plus 	| term + term
