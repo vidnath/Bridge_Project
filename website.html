@@ -1,0 +1,166 @@
+﻿<html>
+<head>
+    <title>Testing Bridge Language</title>
+    <h2 align="center">Welcome to Bridge!</h2>
+    <style type="text/css">
+        body {
+            background-color: #889985;
+            font-family: Helvetica, Arial;
+            font-size: 0.75em;
+        }
+
+        button {
+            margin-left: auto;
+            margin-right: auto;
+            font-family: Helvetica, Arial;
+            font-size: 0.75em;
+        }
+
+        pre {
+            font-family: Courier, Monospace;
+            font-size: 0.72em;
+            width: 600px;
+            height: 325px;
+            background-color: #FFFFFF;
+            border-width: 1px;
+            border-color: #000000;
+            overflow-y: scroll;
+            vertical-align: center;
+        }
+
+        textarea {
+            width: 250px;
+            height: 280px;
+            border-width: 1px;
+            border-color: #000000;
+        }
+    </style>
+
+    <script src="underscore.js"></script>
+    <script src="uxadt.js"></script>
+    <script src="imparse.js"></script>
+    <script src="default.js"></script>
+    <script>
+        /*var I = imparse;
+        var grammar =
+          I.Grammar([
+            I.Production('Formula', [
+              I.Choices([
+                I.Choice('And', I.AssocNone(), [
+                  I.Nonterminal('Formula'), I.Terminal('and'), I.Nonterminal('Formula')
+                ]),
+                I.Choice('Or', I.AssocNone(), [
+                  I.Nonterminal('Formula'), I.Terminal('or'), I.Nonterminal('Formula')
+                ]),
+                I.Choice('Equal', I.AssocNone(), [
+                  I.Nonterminal('Number'), I.Terminal('=='), I.Nonterminal('Number')
+                ]),
+                I.Choice('Not', I.AssocNone(), [
+                  I.Terminal('not'), I.Nonterminal('Formula')
+                ]),
+                I.Choice('True', I.AssocNone(), [
+                  I.Terminal('true')
+                ]),
+                I.Choice('False', I.AssocNone(), [
+                  I.Terminal('false')
+                ]),
+              ]),
+            ]),
+            I.Production('Number', [
+              I.Choices([
+                I.Choice('Plus', I.AssocNone(), [
+                  I.Nonterminal('Number'), I.Terminal('+'), I.Nonterminal('Number')
+                ]),
+                I.Choice('Minus', I.AssocNone(), [
+                  I.Nonterminal('Number'), I.Terminal('-'), I.Nonterminal('Number')
+                ]),
+                I.Choice('Number', I.AssocNone(), [
+                  I.RegExpr('(0|[1-9][0-9]*)')
+                ]),
+                I.Choice('Mult', I.AssocNone(), [
+                    I.Nonterminal('Number'), I.Terminal('*'), I.Nonterminal('Number')
+                ]),
+                I.Choice('Divide', I.AssocNone(), [
+                    I.Nonterminal('Number'), I.Terminal('/'), I.Nonterminal('Number')
+                ]),
+              ]),
+            ]),
+          ]);*/
+
+        var procBNF = function () {
+            var str = document.getElementById('bnf_input').value;
+            var ux = I.bnfToUxadt(str);
+            grammar = ux;
+            document.getElementById('bnf_output1').innerHTML = I.printUxadtGrammar(ux);
+        };
+
+        var procParse = function () {
+            var str = document.getElementById('parser_input').value;
+            var tree = I.parser(grammar, str);
+            if (typeof tree == "string") {
+                document.getElementById('parser_output').innerHTML = tree;
+            } else {
+                document.getElementById('parser_output').innerHTML = JSON.stringify(tree, null, 2);
+            }
+        };
+
+        
+
+    </script>
+
+</head>
+<body onload="document.getElementById('bnf_output1').innerHTML = I.printUxadtGrammar(grammar);">
+    <h4>BNF to UxADT</h4>
+    <table>
+        <tr>
+            <td>
+                <textarea id="bnf_input">
+Formula ::=
+    And | `Formula and `Formula
+    Or | `Formula or `Formula
+    Not | not `Formula
+    Equal | `Term == `Term
+    GT | `Term gt `Term
+    LT | `Term lt `Term
+    GTE | `Term gte `Term
+    LTE | `Term lte `Term
+    True | true
+    False | false
+
+Term ::=
+    Plus | `Term "+" `Term
+    Minus | `Term - `Term
+    Mult | `Term "*" `Term
+    Divide | `Term "/" `Term
+    Power | `Term "^" `Term
+    Mod | `Term "%" `Term
+    Number | $(0|[1-9][0-9]*)$
+    Variable | $([a-z][A-Za-z]*)$
+                </textarea>
+                <br>
+                <button onclick="procBNF();">Generate UxADT</button>
+            </td>
+            <td>
+                <pre id="bnf_output1"></pre>
+            </td>
+        </tr>
+    </table>
+
+    <br>
+    <h3>Parser</h3>
+    <table>
+        <tr>
+            <td>
+                <textarea rows="10" cols="40" id="parser_input">true or false and 1 + 1 == 2 - 2 + 3</textarea>
+                <br>
+                <button onclick="procParse();">Parse</button>
+                <br>
+                <div id="parser_timer"></div>
+            </td>
+            <td>
+                <pre id="parser_output"></pre>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
