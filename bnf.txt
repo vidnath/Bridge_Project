@@ -31,3 +31,12 @@ term ::= number | variable
 
 variable ::= [a-z][A-Za-z]*
 number ::= (0[1-9][0-9]*)
+
+Elements ::= 
+    Expression | `Expression
+    Elements | `Expression `Elements
+
+Expression ::= 
+    Term | `Term
+    Formula | `Formula
+    Array | [ `Elements ]

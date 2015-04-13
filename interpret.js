@@ -47,86 +47,86 @@ function eval_term(e) {
 
 	if (e._(Plus(_,_))) {
 		[e1, e2] = e.matched();
-		return eval_term(e1) + eval_term(e2)
+		return eval_term(e1) + eval_term(e2);
 	}
 
 	if (e._(Minus(_,_))) {
 		[e1, e2] = e.matched();
-		return eval_term(e1) - eval_term(e2)
+		return eval_term(e1) - eval_term(e2);
 	}
 
 	if (e._(Mult(_,_))) {
 		[e1, e2] = e.matched();
-		return eval_term(e1) * eval_term(e2)
+		return eval_term(e1) * eval_term(e2);
 	}
 
 	if (e._(Div(_,_))) {
 		[e1, e2] = e.matched();
-		return eval_term(e1) / eval_term(e2)
+		return eval_term(e1) / eval_term(e2);
 	}
 
 	if (e._(Power(_,_))) {
 		[e1, e2] = e.matched();
-		return Math.pow(eval_term(e1), eval_term(e2))
+		return Math.pow(eval_term(e1), eval_term(e2));
 	}
 
 	if (e._(Mod(_,_))) {
 		[e1, e2] = e.matched();
-		return eval_term(e1) % eval_term(e2)
+		return eval_term(e1) % eval_term(e2);
 	}
-}
+};
 
 // evaluate the terminals and non-terminals in formula
 function eval_formula(e) {
 	if (e._(True(_))) {
 		[n] = e.matched();
-		return n
+		return n;
 	}
 
 	if (e._(False(_))) {
 		[n] = e.matched();
-		return n
+		return n;
 	}
 
 	if (e._(And(_,_))) {
 		[e1, e2] = e.matched();
-		return eval_formula(e1) && eval_formula(e2)
+		return eval_formula(e1) && eval_formula(e2);
 	}
 
 	if (e._(Or(_,_))) {
 		[e1, e2] = e.matched();
-		return eval_formula(e1) || eval_formula(e2)
+		return eval_formula(e1) || eval_formula(e2);
 	}
 
 	if (e._(Not(_))) {
 		[e1] = e.matched();
-		return !eval_formula(e1)
+		return !eval_formula(e1);
 	}
 
 	if (e._(GT(_,_))) {
 		[e1, e2] = e.matched();
-		return eval_formula(e1) > eval_formula(e2)
+		return eval_formula(e1) > eval_formula(e2);
 	}
 
 	if (e._(LT(_,_))) {
 		[e1, e2] = e.matched();
-		return eval_formula(e1) < eval_formula(e2)
+		return eval_formula(e1) < eval_formula(e2);
 	}
 
 	if (e._(GTE(_,_))) {
 		[e1, e2] = e.matched();
-		return eval_formula(e1) >= eval_formula(e2)
+		return eval_formula(e1) >= eval_formula(e2);
 	}
 
 	if (e._(LTE(_,_))) {
 		[e1, e2] = e.matched();
-		return eval_formula(e1) <= eval_term(e2)
+		return eval_formula(e1) <= eval_term(e2);
 	}
 
 	// not sure if need "==" or "==="
 	if (e._(Equal(_,_))) {
 		[e1, e2] = e.matched();
-		return eval_formula(e1) === eval_formula(e2)
+		return eval_formula(e1) === eval_formula(e2);
 	}
-}
+};
 

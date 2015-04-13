@@ -65,139 +65,10 @@
             alert(str);
         };
 
-        /*
-
-        Name: interpret.js
-        Author: Vidhu Nath
-        Description: This JS file contains the interpreter for the Bridge
-            language and calls upon uxadt.js to operate.
-
-      
-
-        // THINGS TO DO STILL::
-        //
-        // include imports of uxadt.js
-        // no direct import allowed in js, might need to include
-        // via jquery or through html
-
-        // set the initial type
-        var _ = null;
-
-        // container for the langauge
-        uxadt._({
-            Number: [],
-            Variable: [],
-            PLus: [_,_],
-            Minus: [_,_],
-            Mult: [_,_],
-            Div: [_,_],
-            Power: [_,_],
-            Mod: [_,_],
-            True: [],
-            False: [],
-            And: [_,_],
-            Or: [_,_],
-            Not: [_],
-            GT: [_,_],
-            LT: [_,_]
-            GTE: [_,_],
-            LTE: [_,_],
-            Eq: [_,_],
-        });
-
-        // evaluate the terminals and non-terminals in term
-        var eval_term = function(e) {
-            if (e._(Number(_))) {
-                [n] = e.matched();
-                return n;
-            }
-
-            if (e._(Plus(_,_))) {
-                [e1, e2] = e.matched();
-                return eval_term(e1) + eval_term(e2);
-            }
-
-            if (e._(Minus(_,_))) {
-                [e1, e2] = e.matched();
-                return eval_term(e1) - eval_term(e2);
-            }
-
-            if (e._(Mult(_,_))) {
-                [e1, e2] = e.matched();
-                return eval_term(e1) * eval_term(e2);
-            }
-
-            if (e._(Div(_,_))) {
-                [e1, e2] = e.matched();
-                return eval_term(e1) / eval_term(e2);
-            }
-
-            if (e._(Power(_,_))) {
-                [e1, e2] = e.matched();
-                return Math.pow(eval_term(e1), eval_term(e2));
-            }
-
-            if (e._(Mod(_,_))) {
-                [e1, e2] = e.matched();
-                return eval_term(e1) % eval_term(e2);
-            }
+        var disp = function() {
+            var str = document.getElementById('parser_output').innerHTML;
+            document.getElementById("test").innerHTML = str;
         }
-
-        // evaluate the terminals and non-terminals in formula
-        var eval_formula = function(e) {
-            if (e._(True(_))) {
-                [n] = e.matched();
-                return n
-            }
-
-            if (e._(False(_))) {
-                [n] = e.matched();
-                return n
-            }
-
-            if (e._(And(_,_))) {
-                [e1, e2] = e.matched();
-                return eval_formula(e1) && eval_formula(e2);
-            }
-
-            if (e._(Or(_,_))) {
-                [e1, e2] = e.matched();
-                return eval_formula(e1) || eval_formula(e2);
-            }
-
-            if (e._(Not(_))) {
-                [e1] = e.matched();
-                return !eval_formula(e1);
-            }
-
-            if (e._(GT(_,_))) {
-                [e1, e2] = e.matched();
-                return eval_formula(e1) > eval_formula(e2);
-            }
-
-            if (e._(LT(_,_))) {
-                [e1, e2] = e.matched();
-                return eval_formula(e1) < eval_formula(e2);
-            }
-
-            if (e._(GTE(_,_))) {
-                [e1, e2] = e.matched();
-                return eval_formula(e1) >= eval_formula(e2);
-            }
-
-            if (e._(LTE(_,_))) {
-                [e1, e2] = e.matched();
-                return eval_formula(e1) <= eval_term(e2);
-            }
-
-            // not sure if need "==" or "==="
-            if (e._(Equal(_,_))) {
-                [e1, e2] = e.matched();
-                return eval_formula(e1) === eval_formula(e2);
-            }
-        };*/
-
-
 
     </script>
 
@@ -229,6 +100,23 @@ Term ::=
     Mod | `Term "%" `Term
     Number | $(0|[1-9][0-9]*)$
     Variable | $([a-z][A-Za-z]*)$
+
+Expression ::= 
+    Term | `Term
+    Formula | `Formula
+    Array | [ `Elements ]
+
+Elements ::= 
+    Expression | `Expression
+    Elements | `Expression `Elements
+
+Program ::=
+    Number | Number
+    Variable | Variable
+
+
+
+
                 </textarea>
 
                 <br>
@@ -245,7 +133,7 @@ Term ::=
     <table>
         <tr>
             <td>
-                <textarea rows="5" cols="10" id="parser_input">true or false and 1 + 1 == 2 - 2 + 3</textarea>
+                <textarea rows="10" cols="10" id="parser_input">true or false and 1 + 1 == 2 - 2 + 3</textarea>
 
                 <br>
 
@@ -260,14 +148,21 @@ Term ::=
     </table>
 
     <br>
+    <p id="test"></p>
+
+    <table>
+        <tr>
+            <td>
+                <div align="center">
+                    <button  onclick="disp();">Process</button>
+                    <br>
+                </div>
+            </td>
+        </tr>
+    </table>
 
     <h3 align="center">Output</h3>
     <TABLE>
-        <tr>
-            <button  onclick="eval();">Process</button>
-            <br>
-            <div id="interpret_timer"></div>
-        </tr>
         <tr>
             <td>
                 <div align="center">

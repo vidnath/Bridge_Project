@@ -1,0 +1,13 @@
+Notes + Questions:
+
+1. How to include the Empty production? (Empty | )
+	It doesn't break into UxADT as well and doesn't process.
+
+2. How to proerply set the JavaScript function to read from a textarea.
+
+3. What is the type of the object containing the parsed syntax (the abstract syntax tree)?
+
+4. Should the interpreter be in a separate file and called via src or should it be embedded directly in the html?
+
+5. Why use innerhtml to get string and not document.value? (in disp() function)
+
