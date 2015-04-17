@@ -43,7 +43,7 @@
     <script src="interpret.js"></script>
 
     <script>
-    
+
         var procBNF = function () {
             var str = document.getElementById('bnf_input').value;
             var ux = I.bnfToUxadt(str);
@@ -65,11 +65,8 @@
         var eval = function() {
             var str = document.getElementById('parser_input').value;
             var tree = I.parser(grammar, str)
-            //alert(typeof tree);
-            var outp = eval_term([],tree);
+            var outp = evaluate([],tree);
             document.getElementById('interpreter_output').innerHTML = outp;
-            //alert(typeof [])
-            //console.log();
 
         };
 
@@ -133,8 +130,8 @@ Program ::=
     <h3 align="center">Parser</h3>
     <table>
         <tr>
-            <td>
-                <textarea rows="10" cols="10" id="parser_input">1 + 1</textarea>
+            <td align="center">
+                <textarea rows="10" cols="10" id="parser_input"></textarea>
 
                 <br>
 

@@ -1,3 +1,11 @@
+/*
+Name: interpret.js
+Author: Vidhu Nath
+Description: This JS file contains the interpreter used for the Bridge
+	language and is called by 'website.html' to process the langauge.
+
+*/
+
 var _ = null;
 
 Leaf = String;
@@ -21,15 +29,157 @@ var eval_term = function(env, e) {
                 var v1 = eval_term(env,e1);
                 var v2 = eval_term(env,e2);
                 return v1 + v2;
-
             }
 
+            if (key == "Minus") {
+                var e1 = e[key][0];
+                var e2 = e[key][1];
+                var v1 = eval_term(env,e1);
+                var v2 = eval_term(env,e2);
+                return v1 - v2;
+            }
+
+            if (key == "Mult") {
+                var e1 = e[key][0];
+                var e2 = e[key][1];
+                var v1 = eval_term(env,e1);
+                var v2 = eval_term(env,e2);
+                return v1 * v2;
+            }
+
+            if (key == "Div") {
+                var e1 = e[key][0];
+                var e2 = e[key][1];
+                var v1 = eval_term(env,e1);
+                var v2 = eval_term(env,e2);
+                return v1 / v2;
+            }
+
+            if (key == "Mod") {
+                var e1 = e[key][0];
+                var e2 = e[key][1];
+                var v1 = eval_term(env,e1);
+                var v2 = eval_term(env,e2);
+                return v1 % v2;
+            }
+
+            if (key == "Power") {
+                var e1 = e[key][0];
+                var e2 = e[key][1];
+                var v1 = eval_term(env,e1);
+                var v2 = eval_term(env,e2);
+                return Math.pow(v1, v2);
+            }
         }
+    }
+
+    return null;
+};
+
+var eval_formula = function(env,e) {
+	if (typeof e === Node) {
+
+        //for(var key in e)
+        for (var key in e) {
+
+            if (key == "And") {
+                var e1 = e[key][0];
+                var e2 = e[key][1];
+                var v1 = eval_formula(env,e1);
+                var v2 = eval_formula(env,e2);
+                return v1 && v2;
+            }
+
+            if (key == "Or") {
+                var e1 = e[key][0];
+                var e2 = e[key][1];
+                var v1 = eval_formula(env,e1);
+                var v2 = eval_formula(env,e2);
+                return v1 || v2;
+            }
+
+            if (key == "Not") {
+                var e1 = e[key][0];
+                var v1 = eval_formula(env,e1);
+                return !v1;
+            }
+
+            if (key == "GT") {
+                var e1 = e[key][0];
+                var e2 = e[key][1];
+                var v1 = eval_term(env,e1);
+                var v2 = eval_term(env,e2);
+                return v1 > v2;
+            }
+
+            if (key == "LT") {
+                var e1 = e[key][0];
+                var e2 = e[key][1];
+                var v1 = eval_term(env,e1);
+                var v2 = eval_term(env,e2);
+                return v1 < v2;
+            }
+
+            if (key == "GTE") {
+                var e1 = e[key][0];
+                var e2 = e[key][1];
+                var v1 = eval_term(env,e1);
+                var v2 = eval_term(env,e2);
+                return v1 >= v2;
+            }
+
+            if (key == "LTE") {
+                var e1 = e[key][0];
+                var e2 = e[key][1];
+                var v1 = eval_term(env,e1);
+                var v2 = eval_term(env,e2);
+                return v1 <= v2;
+            }
+
+            if (key == "Equal") {
+                var e1 = e[key][0];
+                var e2 = e[key][1];
+                var v1 = eval_term(env,e1);
+                var v2 = eval_term(env,e2);
+                return v1 === v2;
+            }
+        }
+    }
+
+    if (typeof e === Leaf) {
+    	if (e == "True") {
+    		return true;
+    	}
+
+    	if (e == "False") {
+    		return false;
+    	}
     }
 };
 
+var evaluate = function(env,e) {
+	var outp = eval_term(env,e);
+
+	if (outp == null) {
+		outp = eval_formula(env,e);
+	}
+
+	return outp;
+};
+
+	/*if (typeof e === Leaf) {
+		for (var key in e) {
+
+			if (key == "True")
+				return true;
+			else
+				return false;
+		}
+	}
+}
 
 
+*/
 
 /*
 
