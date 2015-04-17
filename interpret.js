@@ -1,3 +1,36 @@
+var _ = null;
+
+Leaf = String;
+Node = "object";
+
+var eval_term = function(env, e) {
+    if (typeof e === Node) {
+
+        //for(var key in e)
+        for (var key in e) {
+
+            if (key == "Number") {
+                var n = e[key];
+                n = Number(n);
+                return n;
+            }
+
+            if (key == "Plus") {
+                var e1 = e[key][0];
+                var e2 = e[key][1];
+                var v1 = eval_term(env,e1);
+                var v2 = eval_term(env,e2);
+                return v1 + v2;
+
+            }
+
+        }
+    }
+};
+
+
+
+
 /*
 
 Name: interpret.js
@@ -5,7 +38,7 @@ Author: Vidhu Nath
 Description: This JS file contains the interpreter for the Bridge
 	language and calls upon uxadt.js to operate.
 
-*/
+
 
 // THINGS TO DO STILL::
 //
@@ -24,7 +57,7 @@ Array.prototype.contains = function(obj) {
     return false;
 };
 
-var uxadt = require("./uxadt.js");
+//var uxadt = require("./uxadt.js");
 
 // set the initial type
 var _ = null;
@@ -53,15 +86,15 @@ uxadt._({
 
 // evaluate the terminals and non-terminals in term
 function eval_term(env,e) {
-	if (e._(Number(_)) == True) {
-		[n] = e.matched();
+	if (e._(Number(_))) {
+		var n = e.match();
 		return n;
 	}
 
 	if (e._(Variable(_))) {
-		[n] = e.matched();
+		var n = e.match();
 
-		if env.contains(n) {
+		if (env.contains(n)) {
 			return eval_term(env, env[n]);
 		} else {
 			alert("Error: Variable is unbounded.");
@@ -70,87 +103,87 @@ function eval_term(env,e) {
 	}
 
 	if (e._(Plus(_,_))) {
-		[e1, e2] = e.matched();
-		return eval_term(env, e1) + eval_term(env,e2);
+		var es = e.match();
+		return eval_term(env, es[0]) + eval_term(env,es[1]);
 	}
 
 	if (e._(Minus(_,_))) {
-		[e1, e2] = e.matched();
-		return eval_term(env,e1) - eval_term(env,e2);
+		var es = e.match();
+		return eval_term(env, es[0]) - eval_term(env,es[1]);
 	}
 
 	if (e._(Mult(_,_))) {
-		[e1, e2] = e.matched();
-		return eval_term(env,e1) * eval_term(env,e2);
+		var es = e.match();
+		return eval_term(env, es[0]) * eval_term(env,es[1]);
 	}
 
 	if (e._(Div(_,_))) {
-		[e1, e2] = e.matched();
-		return eval_term(env,e1) / eval_term(env,e2);
+		var es = e.match();
+		return eval_term(env, es[0]) / eval_term(env,es[1]);
 	}
 
 	if (e._(Power(_,_))) {
-		[e1, e2] = e.matched();
-		return Math.pow(eval_term(env,e1), eval_term(env,e2));
+		var es = e.match();
+		return Math.pow(eval_term(env,es[0]), eval_term(env,es[1]));
 	}
 
 	if (e._(Mod(_,_))) {
-		[e1, e2] = e.matched();
-		return eval_term(env,e1) % eval_term(env,e2);
+		var es = e.match();
+		return eval_term(env, es[0]) % eval_term(env,es[1]);
 	}
 };
-
+/*
 // evaluate the terminals and non-terminals in formula
 function eval_formula(env,e) {
 	if (e._(True(_))) {
-		[n] = e.matched();
+		[n] = e.match();
 		return n;
 	}
 
 	if (e._(False(_))) {
-		[n] = e.matched();
+		[n] = e.match();
 		return n;
 	}
 
 	if (e._(And(_,_))) {
-		[e1, e2] = e.matched();
+		[e1, e2] = e.match();
 		return eval_formula(env,e1) && eval_formula(env,e2);
 	}
 
 	if (e._(Or(_,_))) {
-		[e1, e2] = e.matched();
+		[e1, e2] = e.match();
 		return eval_formula(env,e1) || eval_formula(env,e2);
 	}
 
 	if (e._(Not(_))) {
-		[e1] = e.matched();
+		[e1] = e.match();
 		return !eval_formula(env,e1);
 	}
 
 	if (e._(GT(_,_))) {
-		[e1, e2] = e.matched();
+		[e1, e2] = e.match();
 		return eval_formula(env,e1) > eval_formula(env,e2);
 	}
 
 	if (e._(LT(_,_))) {
-		[e1, e2] = e.matched();
+		[e1, e2] = e.match();
 		return eval_formula(env,e1) < eval_formula(env,e2);
 	}
 
 	if (e._(GTE(_,_))) {
-		[e1, e2] = e.matched();
+		[e1, e2] = e.match();
 		return eval_formula(env,e1) >= eval_formula(env,e2);
 	}
 
 	if (e._(LTE(_,_))) {
-		[e1, e2] = e.matched();
+		[e1, e2] = e.match();
 		return eval_formula(env,e1) <= eval_term(env,e2);
 	}
 
 	// not sure if need "==" or "==="
 	// used "===" by default for comprehensiveness
 	if (e._(Equal(_,_))) {
-		[e1, e2] = e.matched();
+		[e1, e2] = e.match();
 		return eval_formula(env,e1) === eval_formula(env,e2);
 	}
 };
@@ -158,4 +191,4 @@ function eval_formula(env,e) {
 function eval_exp(env,e) {
 	if (e._(Term()))
 }
-
+*/

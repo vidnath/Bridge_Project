@@ -43,14 +43,7 @@
     <script src="interpret.js"></script>
 
     <script>
-
-        var str = document.getElementById("bnf_input").value;
-        //var ux = I.bnfToUxadt(str);
-        //grammar = ux;
-
-        //str = document.getElementById("parser_input").value;
-        //var tree = I.parser(grammar,str);
-
+    
         var procBNF = function () {
             var str = document.getElementById('bnf_input').value;
             var ux = I.bnfToUxadt(str);
@@ -69,17 +62,18 @@
             }
         };
 
-        //var eval = function() {
-            //var outp = eval_term(tree);
+        var eval = function() {
+            var str = document.getElementById('parser_input').value;
+            var tree = I.parser(grammar, str)
+            //alert(typeof tree);
+            var outp = eval_term([],tree);
+            document.getElementById('interpreter_output').innerHTML = outp;
+            //alert(typeof [])
             //console.log();
 
-        //};
+        };
 
-        var disp = function() {
-            var str = document.getElementById('parser_output').innerHTML;
-            document.getElementById("test").innerHTML = str;
-            //console.log(str);
-        }
+        //true or false and 1 + 1 == 2 - 2 + 3
 
     </script>
 
@@ -106,7 +100,7 @@ Term ::=
     Plus | `Term "+" `Term
     Minus | `Term - `Term
     Mult | `Term "*" `Term
-    Divide | `Term "/" `Term
+    Div | `Term "/" `Term
     Power | `Term "^" `Term
     Mod | `Term "%" `Term
     Number | $(0|[1-9][0-9]*)$
@@ -140,7 +134,7 @@ Program ::=
     <table>
         <tr>
             <td>
-                <textarea rows="10" cols="10" id="parser_input">true or false and 1 + 1 == 2 - 2 + 3</textarea>
+                <textarea rows="10" cols="10" id="parser_input">1 + 1</textarea>
 
                 <br>
 
@@ -161,7 +155,7 @@ Program ::=
         <tr>
             <td>
                 <div align="center">
-                    <button  onclick="disp();">Process</button>
+                    <button  onclick="eval();">Process</button>
                     <br>
                 </div>
             </td>
