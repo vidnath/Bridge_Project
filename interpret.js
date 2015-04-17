@@ -1,4 +1,4 @@
-/*
+ /*
 Name: interpret.js
 Author: Vidhu Nath
 Description: This JS file contains the interpreter used for the Bridge
@@ -143,19 +143,30 @@ var eval_formula = function(env,e) {
                 var v2 = eval_term(env,e2);
                 return v1 === v2;
             }
+
+            if (key == "True") {
+                return JSON.stringify(key, null, 2);
+                //return true;
+            }
+
+            if (key == "False") {
+                return JSON.stringify(key, null, 2);
+                //return false;
+            }
+        }
+
+    } else {
+
+        if (e == "True") {
+            return true;
+        }
+
+        if (e == "False") {
+            return false;
         }
     }
-
-    if (typeof e === Leaf) {
-    	if (e == "True") {
-    		return true;
-    	}
-
-    	if (e == "False") {
-    		return false;
-    	}
-    }
 };
+
 
 var evaluate = function(env,e) {
 	var outp = eval_term(env,e);
