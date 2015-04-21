@@ -65,7 +65,7 @@
         var eval = function() {
             var str = document.getElementById('parser_input').value;
             var tree = I.parser(grammar, str)
-            var outp = evaluate([],tree);
+            var outp = exec_assign({},tree);
             document.getElementById('interpreter_output').innerHTML = outp;
 
         };
@@ -81,6 +81,9 @@
         <tr>
             <td>
                 <textarea id="bnf_input">
+Program ::= 
+    Assign | $([a-z][A-Za-z]*)$ = `Expression
+
 Formula ::=
     And | `Formula and `Formula
     Or | `Formula or `Formula
@@ -95,26 +98,22 @@ Formula ::=
 
 Term ::=
     Plus | `Term "+" `Term
-    Minus | `Term - `Term
-    Mult | `Term "*" `Term
-    Div | `Term "/" `Term
-    Power | `Term "^" `Term
-    Mod | `Term "%" `Term
+    Factor | `Factor
+
+Factor ::=
+    Minus | `Factor - `Factor
+    Mult | `Factor "*" `Factor
+    Div | `Factor "/" `Factor
+    Power | `Factor "^" `Factor
+    Mod | `Factor "%" `Factor
     Number | $(0|[1-9][0-9]*)$
     Variable | $([a-z][A-Za-z]*)$
 
 Expression ::= 
     Term | `Term
     Formula | `Formula
-    Array | [ `Elements ]
 
-Elements ::= 
-    Expression | `Expression
-    Elements | `Expression `Elements
 
-Program ::=
-    Number | Number
-    Variable | Variable
                 </textarea>
 
                 <br>

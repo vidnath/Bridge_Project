@@ -17,19 +17,37 @@ var eval_term = function(env, e) {
         //for(var key in e)
         for (var key in e) {
 
+            /*
             if (key == "Number") {
                 var n = e[key];
                 n = Number(n);
                 return n;
             }
 
+            if (key == "Variable") {
+                var x = e[key];
+                if (env[x] != null) {
+                    return eval_expression(env,env[x]);
+                } else {
+                    alert("Variable not assigned to any value.");
+                }
+            } */
+
             if (key == "Plus") {
                 var e1 = e[key][0];
                 var e2 = e[key][1];
                 var v1 = eval_term(env,e1);
                 var v2 = eval_term(env,e2);
+                //console.log()
                 return v1 + v2;
             }
+
+            if (key == "Factor") {
+                var e1 = e[key][0];
+                return eval_factor(env, e1);
+            }
+
+            /*
 
             if (key == "Minus") {
                 var e1 = e[key][0];
@@ -69,12 +87,95 @@ var eval_term = function(env, e) {
                 var v1 = eval_term(env,e1);
                 var v2 = eval_term(env,e2);
                 return Math.pow(v1, v2);
-            }
+            } */
         }
     }
 
     return null;
 };
+
+
+var eval_factor = function(env,e) {
+    if (typeof e === Node) {
+
+        for (var key in e) {
+
+            if (key == "Number") {
+                var n = e[key][0];
+                n = Number(n);
+                return n;
+            }
+
+            if (key == "Variable") {
+                var x = e[key][0];
+                if (env[x] != null) {
+                    return eval_expression(env,env[x]);
+                } else {
+                    alert("Variable not assigned to any value.");
+                }
+            }
+
+            if (key == "Minus") {
+                var e1 = e[key][0];
+                var e2 = e[key][1];
+                var v1 = eval_factor(env,e1);
+                var v2 = eval_factor(env,e2);
+                return v1 - v2;
+            }
+
+            if (key == "Mult") {
+                var e1 = e[key][0];
+                var e2 = e[key][1];
+                var v1 = eval_factor(env,e1);
+                var v2 = eval_factor(env,e2);
+                return v1 * v2;
+            }
+
+            if (key == "Div") {
+                var e1 = e[key][0];
+                var e2 = e[key][1];
+                var v1 = eval_factor(env,e1);
+                var v2 = eval_factor(env,e2);
+                return v1 / v2;
+            }
+
+            if (key == "Mod") {
+                var e1 = e[key][0];
+                var e2 = e[key][1];
+                var v1 = eval_factor(env,e1);
+                var v2 = eval_factor(env,e2);
+                return v1 % v2;
+            }
+
+            if (key == "Power") {
+                var e1 = e[key][0];
+                var e2 = e[key][1];
+                var v1 = eval_factor(env,e1);
+                var v2 = eval_factor(env,e2);
+                return Math.pow(v1, v2);
+            } 
+        }
+    } 
+
+    return null;
+};
+
+var exec_assign = function(env,e) {
+    if (typeof e === Node) {
+
+        for (var key in e) {
+            if (key == "Assign") {
+                var vr = e[key][0];
+                var e1 = e[key][1];
+                console.log(e1);
+                //var p = e[key][2];
+                env[vr] = eval_expression(env,e1);
+                console.log(env);
+                return env[vr];
+            }
+        }
+    }
+}
 
 var eval_formula = function(env,e) {
 	if (typeof e === Node) {
@@ -168,12 +269,23 @@ var eval_formula = function(env,e) {
 };
 
 
-var evaluate = function(env,e) {
-	var outp = eval_term(env,e);
+var eval_expression = function(env,e) {
+    var outp;
 
-	if (outp == null) {
-		outp = eval_formula(env,e);
-	}
+    if (typeof e === Node) {
+
+        for (var key in e) {
+            if (key == "Term") {
+                var child = e[key][0];
+                outp = eval_term(env,child);
+            }
+
+            if (key == "Formula") {
+                var child = e[key][0]
+                outp = eval_formula(env,child);
+            }
+        }
+    }
 
 	return outp;
 };
