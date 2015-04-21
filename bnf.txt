@@ -1,17 +1,14 @@
 program ::= number | variable
-    Assign 	| assign variable := expression; program
-    Show 	| show expression
-    For 	| for variable to term program; program
-    If 		| if formula program; program
-    While 	| while expression program; program
+    Assign 	| assign variable := expression ; program
+    Print 	| print expression
+    For 	| for variable to term program ; program
+    If 		| if formula program ; program
+    While 	| while expression program ; program
     Empty 	|
 
-expression ::= term | formula | [ elements ]
+expression ::= term | formula
 
-elements ::= expression
-    | expression, elements
-
-formula ::= true | false
+formula ::=
     And 	| formula and formula
     Or 		| formula or formula
     Not 	| not formula
@@ -20,14 +17,17 @@ formula ::= true | false
     GTE 	| term gte term
     LTE 	| term lte term
     Equal   | term == term
+    True    | true
+    False   | false
 
-term ::= number | variable
-    Plus 	| term + term
-    Minus 	| term - term
+term ::= 
+    Plus    | term + term
+    Minus   | term - term
+
+factor ::= number | variable
     Mult 	| term * term
     Div 	| term / term
     Power 	| term ** term
     Mod 	| term % term
-
-variable ::= [a-z][A-Za-z]*
-number ::= (0[1-9][0-9]*)
+    Number  | (0[1-9][0-9]*)
+    Variable| [a-z][A-Za-z]* 
