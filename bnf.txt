@@ -1,9 +1,8 @@
 program ::= number | variable
     Assign 	| assign variable := expression ; program
     Print 	| print expression
-    For 	| for variable to term program ; program
+    For 	| for term times program ; program
     If 		| if formula program ; program
-    While 	| while expression program ; program
     Empty 	|
 
 expression ::= term | formula

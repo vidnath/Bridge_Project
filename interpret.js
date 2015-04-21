@@ -16,41 +16,26 @@ var eval_term = function(env, e) {
 
         //for(var key in e)
         for (var key in e) {
-
-            /*
-            if (key == "Number") {
-                var n = e[key];
-                n = Number(n);
-                return n;
-            }
-
-            if (key == "Variable") {
-                var x = e[key];
-                if (env[x] != null) {
-                    return eval_expression(env,env[x]);
-                } else {
-                    alert("Variable not assigned to any value.");
-                }
-            } */
+            var child = e[key]
 
             if (key == "Plus") {
-                var e1 = e[key][0];
-                var e2 = e[key][1];
+                var e1 = child[0];
+                var e2 = child[1];
                 var v1 = eval_term(env,e1);
                 var v2 = eval_term(env,e2);
                 return v1 + v2;
             }
 
             if (key == "Minus") {
-                var e1 = e[key][0];
-                var e2 = e[key][1];
+                var e1 = child[0];
+                var e2 = child[1];
                 var v1 = eval_term(env,e1);
                 var v2 = eval_term(env,e2);
                 return v1 - v2;
             }
 
             if (key == "Factor") {
-                var e1 = e[key][0];
+                var e1 = child[0];
                 return eval_factor(env, e1);
             }
         }
@@ -64,59 +49,59 @@ var eval_factor = function(env,e) {
     if (typeof e === Node) {
 
         for (var key in e) {
+            var child = e[key];
 
             if (key == "Number") {
-                var n = e[key][0];
+                var n = child[0];
                 n = Number(n);
                 return n;
             }
 
             if (key == "Variable") {
-                var e1 = e[key][0];
+                var x = child[0];
 
-                var o = eval_expression(env,e1);
-                if (o == null) {
-                    alert("Variable is not assigned to any value.");
-                    return "Error: Variable not defined!";
-                } else
-                    return o;
+                if (env[x] == null) {
+                    alert("Variable " + x + " is not defined!")
+                } else {
+                    return env[x];
+                }
             }
 
             if (key == "Minus") {
-                var e1 = e[key][0];
-                var e2 = e[key][1];
+                var e1 = child[0];
+                var e2 = child[1];
                 var v1 = eval_factor(env,e1);
                 var v2 = eval_factor(env,e2);
                 return v1 - v2;
             }
 
             if (key == "Mult") {
-                var e1 = e[key][0];
-                var e2 = e[key][1];
+                var e1 = child[0];
+                var e2 = child[1];
                 var v1 = eval_factor(env,e1);
                 var v2 = eval_factor(env,e2);
                 return v1 * v2;
             }
 
             if (key == "Div") {
-                var e1 = e[key][0];
-                var e2 = e[key][1];
+                var e1 = child[0];
+                var e2 = child[1];
                 var v1 = eval_factor(env,e1);
                 var v2 = eval_factor(env,e2);
                 return v1 / v2;
             }
 
             if (key == "Mod") {
-                var e1 = e[key][0];
-                var e2 = e[key][1];
+                var e1 = child[0];
+                var e2 = child[1];
                 var v1 = eval_factor(env,e1);
                 var v2 = eval_factor(env,e2);
                 return v1 % v2;
             }
 
             if (key == "Power") {
-                var e1 = e[key][0];
-                var e2 = e[key][1];
+                var e1 = child[0];
+                var e2 = child[1];
                 var v1 = eval_factor(env,e1);
                 var v2 = eval_factor(env,e2);
                 return Math.pow(v1, v2);
@@ -132,77 +117,68 @@ var eval_formula = function(env,e) {
 
         //for(var key in e)
         for (var key in e) {
+            var child = e[key];
 
             if (key == "And") {
-                var e1 = e[key][0];
-                var e2 = e[key][1];
+                var e1 = child[0];
+                var e2 = child[1];
                 var v1 = eval_formula(env,e1);
                 var v2 = eval_formula(env,e2);
                 return v1 && v2;
             }
 
             if (key == "Or") {
-                var e1 = e[key][0];
-                var e2 = e[key][1];
+                var e1 = child[0];
+                var e2 = child[1];
                 var v1 = eval_formula(env,e1);
                 var v2 = eval_formula(env,e2);
                 return v1 || v2;
             }
 
             if (key == "Not") {
-                var e1 = e[key][0];
+                var e1 = child[0];
                 var v1 = eval_formula(env,e1);
                 return !v1;
             }
 
             if (key == "GT") {
-                var e1 = e[key][0];
-                var e2 = e[key][1];
+                var e1 = child[0];
+                var e2 = child[1];
                 var v1 = eval_term(env,e1);
                 var v2 = eval_term(env,e2);
                 return v1 > v2;
             }
 
             if (key == "LT") {
-                var e1 = e[key][0];
-                var e2 = e[key][1];
+                var e1 = child[0];
+                var e2 = child[1];
                 var v1 = eval_term(env,e1);
                 var v2 = eval_term(env,e2);
                 return v1 < v2;
             }
 
             if (key == "GTE") {
-                var e1 = e[key][0];
-                var e2 = e[key][1];
+                var e1 = child[0];
+                var e2 = child[1];
                 var v1 = eval_term(env,e1);
                 var v2 = eval_term(env,e2);
                 return v1 >= v2;
             }
 
             if (key == "LTE") {
-                var e1 = e[key][0];
-                var e2 = e[key][1];
+                var e1 = child[0];
+                var e2 = child[1];
                 var v1 = eval_term(env,e1);
                 var v2 = eval_term(env,e2);
                 return v1 <= v2;
             }
 
             if (key == "Equal") {
-                var e1 = e[key][0];
-                var e2 = e[key][1];
+                var e1 = child[0];
+                var e2 = child[1];
                 var v1 = eval_term(env,e1);
                 var v2 = eval_term(env,e2);
                 return v1 === v2;
-            }
-
-            if (key == "True") {
-                return JSON.stringify(key, null, 2);
-                //return true;
-            }
-
-            if (key == "False") {
-                return JSON.stringify(key, null, 2);
-                //return false;
             }
         }
 
@@ -247,48 +223,63 @@ var execute = function(env,e) {
     if (typeof e === Node) {
 
         for (var key in e) {
+            var child = e[key];
 
             if (key == "Print") {
-                var e1 = e[key][0];
+                var e1 = child[0];
                 var o = eval_expression(env,e1);
                 return o;
             }
 
             if (key == "Assign") {
-                var v = e[key][0];
-                var e1 = e[key][1];
-                var p = e[key][2];
+                var v = child[0];
+                var e1 = child[1];
+                var p = child[2];
 
-                console.log(e1);
+                var res = eval_expression(env, e1);
 
-                env[v] = e1;
-                console.log(env);
+                env[v] = res;
                 var o = execute(env,p);
                 return o;
             }
-        }
-    }
-};
 
-/*
-var exec_assign = function(env,e) {
-    if (typeof e === Node) {
+            if (key == "If") {
+                var f = child[0];
+                var p1 = child[1];
+                var p2 = child[2];
 
-        for (var key in e) {
-            if (key == "Assign") {
-                var vr = e[key][0];
-                var e1 = e[key][1];
-                console.log(e1);
-                //var p = e[key][2];
-                env[vr] = eval_expression(env,e1);
-                console.log(env);
-                return env[vr];
+                var outp1;
+                var outp2 = execute(env,p2);
+
+                var res = eval_formula(env, f);
+                if (res == true) {
+                    outp1 = execute(env,p1);
+                    return [outp1,outp2];
+                }
+                else
+                    return outp2;
+            }
+
+            if (key == "For") {
+                var t1 = child[0];
+                var p1 = child[1];
+                var p2 = child[2];
+
+                t1 = eval_term(env, t1);
+                t1 = Math.abs(t1);
+
+                var outp1 = [];
+                for (var i = 0; i < t1; i++) {
+                    var tmp1 = execute(env,p1);
+                    outp1 = outp1.concat(tmp1);
+                }
+
+                var outp2 = execute(env, p2);
+                return [outp1,outp2];
             }
         }
     }
 };
-
-*/
 
 var interpret = function(env, e) {
     var outp = execute(env,e);
