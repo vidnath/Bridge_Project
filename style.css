@@ -1,0 +1,26 @@
+body {
+	background-color: #889985;
+	background-image: url("images/green_cup.png");
+    font-family: Helvetica, Arial;
+    font-size: 0.75em;
+}
+
+#bnf_text,
+#examples {
+	width: 387px;
+    height: 510px;
+    border-width: 1px;
+    border-color: #000000;
+}
+/*
+#examples {
+	width: 450px;
+	height: 350px;
+}*/
+
+textarea {
+	height: 180px;
+	width: 200px;
+}
+
+

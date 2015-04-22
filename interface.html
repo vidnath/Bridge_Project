@@ -1,0 +1,129 @@
+<!DOCTYPE <!DOCTYPE html>
+<html>
+<head>
+	<title>Bridge: Programming, Simplified</title>
+	<h2 id="main">Welcome to the Bridge Programming Langauge!</h2>
+	<link rel="stylesheet" type="text/css" href="style.css">
+
+	<script src="javascript/underscore.js"></script>
+    <script src="javascript/uxadt.js"></script>
+    <script src="javascript/imparse.js"></script>
+    <script src="javascript/default.js"></script>
+    <script src="javascript/interpret.js"></script>
+
+    <script type="text/javascript">
+
+var procBNF = function () {
+    var str = document.getElementById('bnf_input').value;
+    var ux = I.bnfToUxadt(str);
+    grammar = ux;
+};
+
+var procParse = function () {
+    var str = document.getElementById('parser_input').value;
+    var tree = I.parser(grammar, str);
+    //alert(typeof tree);
+    if (typeof tree == "string") {
+        document.getElementById('parser_output').innerHTML = tree;
+    } else {
+        document.getElementById('parser_output').innerHTML = JSON.stringify(tree, null, 2);
+    }
+};
+
+var eval = function() {
+    var str = document.getElementById('parser_input').value;
+    var tree = I.parser(grammar, str)
+    var outp = interpret({},tree);
+    document.getElementById('interpreter_output').innerHTML = outp;
+
+};
+
+
+    </script>
+
+
+
+</head>
+<body>
+	<table>
+		<tr>
+			<td>
+				<h3 align="center">Bridge Language Syntax</h3>
+				<textarea id="bnf_text">
+Program ::=
+    Print | print `Expression
+    Assign | $([a-z][A-Za-z]*)$ = `Expression ; `Program
+    If | if `Formula `Program ; `Program
+    For | for `Term times `Program ; `Program
+    
+
+Expression ::= 
+    Formula | `Formula
+    Term | `Term
+
+Formula ::=
+    And | `Formula and `Formula
+    Or | `Formula or `Formula
+    Not | not `Formula
+    Equal | `Term == `Term
+    GT | `Term gt `Term
+    LT | `Term lt `Term
+    GTE | `Term gte `Term
+    LTE | `Term lte `Term
+    True | true
+    False | false
+
+Term ::=
+    Plus | `Term "+" `Term
+    Minus | `Factor - `Factor
+    Factor | `Factor
+
+Factor ::=
+    Mult | `Factor "*" `Factor
+    Div | `Factor "/" `Factor
+    Power | `Factor "^" `Factor
+    Mod | `Factor "%" `Factor
+    Number | $(0|[1-9][0-9]*)$
+    Variable | $([a-z][A-Za-z]*)$
+				</textarea>
+			</td>
+
+			<td>
+				<h3 align="center">Examples</h3>
+				<textarea id="examples">
+# Anything behind the pound sign is a comment, don't input it!
+print 1+1                 		# will print 2 in output
+one = 1; print one + one + 1    # will print 3
+print true or false       		# will print true
+print true and false      		# will print false, why?
+foo = 1; bar = foo + 1; print foo + bar		# will print 3
+				</textarea>
+			</td>
+		</tr>
+
+		<tr>
+			<td>
+				<h4>Input Code here!</h4>
+				<textarea id="user_input" placeholder="Type here..."></textarea>
+				<br>
+				<button onclick="procParse();">Make the Magic Happen</button>
+			</td>
+		</tr>
+
+		<div></div>
+		<br>
+
+		<tr>
+			<td>
+				<h4>Abstract Syntax</h4>
+				<textarea id="abs_syn"></textarea>
+			</td>
+			<td>
+				<h4>Output</h4>
+				<textarea id="output"></textarea>
+			</td>
+		</tr>
+	</table>
+
+</body>
+</html>
