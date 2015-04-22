@@ -67,14 +67,6 @@ var eval_factor = function(env,e) {
                 }
             }
 
-            if (key == "Minus") {
-                var e1 = child[0];
-                var e2 = child[1];
-                var v1 = eval_factor(env,e1);
-                var v2 = eval_factor(env,e2);
-                return v1 - v2;
-            }
-
             if (key == "Mult") {
                 var e1 = child[0];
                 var e2 = child[1];

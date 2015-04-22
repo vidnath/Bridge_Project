@@ -1,3 +1,9 @@
+h1,
+h2 {
+	font: 32px/42px trajan-pro-1,trajan-pro-2;
+	font-style: italic;
+}
+
 body {
 	background-color: #889985;
 	background-image: url("images/green_cup.png");
@@ -5,22 +11,41 @@ body {
     font-size: 0.75em;
 }
 
-#bnf_text,
-#examples {
-	width: 387px;
-    height: 510px;
+#bnf_text {
+	width: 400px;
+    height: 530px;
     border-width: 1px;
     border-color: #000000;
 }
-/*
-#examples {
-	width: 450px;
+
+#examples,
+#abs_syn {
+	width: 574px;
 	height: 350px;
-}*/
+	border-width: 1px;
+    border-color: #000000;
+}
+
+#output,
+#user_input {
+	text-align: center;
+	width: 574px;
+	height: 350px;
+	border-width: 1px;
+    border-color: #000000;
+}
+
+table {
+	margin-right: auto;
+	margin-left: auto;
+}
 
 textarea {
+	display: block;
 	height: 180px;
 	width: 200px;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 
