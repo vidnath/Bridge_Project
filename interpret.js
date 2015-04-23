@@ -67,14 +67,6 @@ var eval_factor = function(env,e) {
                 }
             }
 
-            if (key == "Minus") {
-                var e1 = child[0];
-                var e2 = child[1];
-                var v1 = eval_factor(env,e1);
-                var v2 = eval_factor(env,e2);
-                return v1 - v2;
-            }
-
             if (key == "Mult") {
                 var e1 = child[0];
                 var e2 = child[1];
@@ -157,7 +149,7 @@ var eval_formula = function(env,e) {
                 return v1 < v2;
             }
 
-            if (key == "GTE") {
+            if (key == "GE") {
                 var e1 = child[0];
                 var e2 = child[1];
                 var v1 = eval_term(env,e1);
@@ -165,7 +157,7 @@ var eval_formula = function(env,e) {
                 return v1 >= v2;
             }
 
-            if (key == "LTE") {
+            if (key == "LE") {
                 var e1 = child[0];
                 var e2 = child[1];
                 var v1 = eval_term(env,e1);
@@ -225,6 +217,10 @@ var execute = function(env,e) {
         for (var key in e) {
             var child = e[key];
 
+            if (key == "End") {
+                return;
+            }
+
             if (key == "Print") {
                 var e1 = child[0];
                 var o = eval_expression(env,e1);
@@ -275,7 +271,7 @@ var execute = function(env,e) {
                 }
 
                 var outp2 = execute(env, p2);
-                return [outp1,outp2];
+                return outp1.concat(outp2);
             }
         }
     }

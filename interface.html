@@ -5,11 +5,11 @@
 	<h2 id="main">Welcome to the Bridge Programming Langauge!</h2>
 	<link rel="stylesheet" type="text/css" href="style.css">
 
-	<script src="javascript/underscore.js"></script>
-    <script src="javascript/uxadt.js"></script>
-    <script src="javascript/imparse.js"></script>
-    <script src="javascript/default.js"></script>
-    <script src="javascript/interpret.js"></script>
+	<script src="underscore.js"></script>
+    <script src="uxadt.js"></script>
+    <script src="imparse.js"></script>
+    <script src="default.js"></script>
+    <script src="interpret.js"></script>
 
     <script type="text/javascript">
 
@@ -35,33 +35,93 @@ var procParse = function () {
     document.getElementById('output').innerHTML = outp;
 
 };
-
-var eval = function() {
-    //var str = document.getElementById('parser_input').value;
-    //var tree = I.parser(grammar, str)
-    var outp = interpret({},tree);
-    document.getElementById('interpreter_output').innerHTML = outp;
-
-};
-
-
     </script>
-
-
-
 </head>
-<body>
-	<table>
-		<tr>
-			<td>
-				<h3 align="center">Bridge Language Syntax</h3>
-				<textarea id="bnf_text">
 
+<body>
+<table>
+	<tr>
+		<h3>Write your code here!</h3>
+		<textarea id="user_input" placeholder="Type code here..."></textarea>
+		<br>
+		<button onclick="process();">Make the Magic Happen</button>
+
+		<h3>Output</h3>
+		<textarea id="output"></textarea>
+	</tr>
+
+	<tr>
+		<td>
+			<h4>Examples</h4>
+					<textarea id="examples">
+	# Anything behind the double pound sign is a comment, don't input it!
+
+	print 1+1					## outputs 2
+	one = 1; print one + one + 1			## outputs 3
+	print true or false 				## outputs true
+	print true and false 				## outputs false, why?
+	foo = 1; bar = foo + 1; print foo + bar		## outputs 3
+	if 4*4 gt 2^3 print 4*4*1; print 2^3*1		## outputs 16,8
+	for 5 times print 1+2; vidhu = 10; print vidhu	## outputs 3,3,3,3,3,10
+					</textarea>
+		</td>
+	</tr>
+
+</table>
+
+
+
+
+
+</body>
+
+
+
+
+
+<!--
+<body>
+
+	<div id="top">
+		<table>
+			<tr>
+				<td>
+					<h3>Write your code here!</h3>
+					<textarea id="user_input" placeholder="Type code here..."></textarea>
+					<br>
+					<button onclick="process();">Make the Magic Happen</button>
+				</td>
+
+				<td>
+					<h3>Output</h3>
+					<textarea id="output"></textarea>
+				</td>
+			</tr>
+
+			<tr>
+				<td>
+					<h4>Examples</h4>
+					<textarea id="examples">
+	# Anything behind the double pound sign is a comment, don't input it!
+
+	print 1+1					## outputs 2
+	one = 1; print one + one + 1			## outputs 3
+	print true or false 				## outputs true
+	print true and false 				## outputs false, why?
+	foo = 1; bar = foo + 1; print foo + bar		## outputs 3
+	if 4*4 gt 2^3 print 4*4*1; print 2^3*1		## outputs 16,8
+	for 5 times print 1+2; vidhu = 10; print vidhu	## outputs 3,3,3,3,3,10
+					</textarea>
+				</td>
+
+				<td>
+					<textarea id="bnf_text">
 Program ::=
     Print | print `Expression
     Assign | $([a-z][A-Za-z]*)$ = `Expression ; `Program
     If | if `Formula `Program ; `Program
     For | for `Term times `Program ; `Program
+    End | end
     
 
 Expression ::= 
@@ -75,14 +135,14 @@ Formula ::=
     Equal | `Term == `Term
     GT | `Term gt `Term
     LT | `Term lt `Term
-    GTE | `Term gte `Term
-    LTE | `Term lte `Term
+    GE | `Term ge `Term
+    LE | `Term le `Term
     True | true
     False | false
 
 Term ::=
     Plus | `Term "+" `Term
-    Minus | `Factor - `Factor
+    Minus | `Term - `Term
     Factor | `Factor
 
 Factor ::=
@@ -92,45 +152,18 @@ Factor ::=
     Mod | `Factor "%" `Factor
     Number | $(0|[1-9][0-9]*)$
     Variable | $([a-z][A-Za-z]*)$
-				</textarea>
-			</td>
-
-			<td>
-				<h3 align="center">Examples</h3>
-				<textarea id="examples">
-# Anything behind the double pound sign is a comment, don't input it!
-
-print 1+1					## outputs 2
-one = 1; print one + one + 1			## outputs 3
-print true or false 				## outputs true
-print true and false 				## outputs false, why?
-foo = 1; bar = foo + 1; print foo + bar		## outputs 3
-if 4*4 gt 2^3 print 4*4-1; print 2^3+1		## outputs 15,9
-for 5 times print 1+2; vidhu = 10; print vidhu	## outputs 3,3,3,3,3,10
-
-				</textarea>
-			</td>
-		</tr>
-	</table>
+					</textarea>
+				</td>
+			</tr>
+		</table>
+	</div>
 
 	<hr>
-
-	<div align="center">
-		<h3>Write your code here!</h3>
-		<textarea id="user_input" placeholder="Type code here..."></textarea>
-		<br>
-		<button onclick="process();">Make the Magic Happen</button>
-
-	<h4>Output</h4>
-	<textarea id="output"></textarea>
-
-	<hr>
-	<br>
-
 	<p>If you're interested, you can see the abstract syntax tree below, which is the way the code you typed is represented before it is evaluated into output.</p>
 
-	<h4>Abstract Syntax</h4>
-	<textarea id="abs_syn" placeholder="Abstract Syntax Trees will appear here..."></textarea>
-
+	<div align="center">
+		<h4>Abstract Syntax</h4>
+		<textarea id="abs_syn" placeholder="Abstract Syntax Trees will appear here..."></textarea>
+	</div>
 </body>
 </html>

@@ -19,3 +19,10 @@ Notes + Questions:
 2. Matching sides (i.e. 1+1+1+1 is Plus[Plus[Plus...]] instead of Plus[Plus],[Plus])
 3. How to put in strings and such.
 4. How to implement true/false and other terminals?
+
+
+/////////////
+1. Fix GTE/LTE operators - Done
+2. Minus operator - Done
+3. Add "End" production - Done
+4. Fix UI
