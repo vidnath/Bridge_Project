@@ -41,6 +41,7 @@ var procParse = function () {
 <body>
 <table>
 	<tr>
+		<td>
 		<h3>Write your code here!</h3>
 		<textarea id="user_input" placeholder="Type code here..."></textarea>
 		<br>
@@ -48,9 +49,8 @@ var procParse = function () {
 
 		<h3>Output</h3>
 		<textarea id="output"></textarea>
-	</tr>
+	</td>
 
-	<tr>
 		<td>
 			<h4>Examples</h4>
 					<textarea id="examples">
@@ -65,57 +65,11 @@ var procParse = function () {
 	for 5 times print 1+2; vidhu = 10; print vidhu	## outputs 3,3,3,3,3,10
 					</textarea>
 		</td>
-	</tr>
 
-</table>
+		<td>
+			<h4 align="center">BNF - Language Syntax</h4>
+			<textarea id="bnf_text">
 
-
-
-
-
-</body>
-
-
-
-
-
-<!--
-<body>
-
-	<div id="top">
-		<table>
-			<tr>
-				<td>
-					<h3>Write your code here!</h3>
-					<textarea id="user_input" placeholder="Type code here..."></textarea>
-					<br>
-					<button onclick="process();">Make the Magic Happen</button>
-				</td>
-
-				<td>
-					<h3>Output</h3>
-					<textarea id="output"></textarea>
-				</td>
-			</tr>
-
-			<tr>
-				<td>
-					<h4>Examples</h4>
-					<textarea id="examples">
-	# Anything behind the double pound sign is a comment, don't input it!
-
-	print 1+1					## outputs 2
-	one = 1; print one + one + 1			## outputs 3
-	print true or false 				## outputs true
-	print true and false 				## outputs false, why?
-	foo = 1; bar = foo + 1; print foo + bar		## outputs 3
-	if 4*4 gt 2^3 print 4*4*1; print 2^3*1		## outputs 16,8
-	for 5 times print 1+2; vidhu = 10; print vidhu	## outputs 3,3,3,3,3,10
-					</textarea>
-				</td>
-
-				<td>
-					<textarea id="bnf_text">
 Program ::=
     Print | print `Expression
     Assign | $([a-z][A-Za-z]*)$ = `Expression ; `Program
@@ -132,7 +86,7 @@ Formula ::=
     And | `Formula and `Formula
     Or | `Formula or `Formula
     Not | not `Formula
-    Equal | `Term == `Term
+    Equal | `Term eq `Term
     GT | `Term gt `Term
     LT | `Term lt `Term
     GE | `Term ge `Term
@@ -153,17 +107,18 @@ Factor ::=
     Number | $(0|[1-9][0-9]*)$
     Variable | $([a-z][A-Za-z]*)$
 					</textarea>
-				</td>
-			</tr>
-		</table>
-	</div>
+		</td>
 
-	<hr>
-	<p>If you're interested, you can see the abstract syntax tree below, which is the way the code you typed is represented before it is evaluated into output.</p>
+	</tr>
 
-	<div align="center">
-		<h4>Abstract Syntax</h4>
+</table>
+
+<div>
+	<h4>Abstract Syntax</h4>
 		<textarea id="abs_syn" placeholder="Abstract Syntax Trees will appear here..."></textarea>
-	</div>
+</div>
+
+
+
 </body>
 </html>

@@ -3,7 +3,7 @@ program ::= number | variable
     Print 	| print expression
     For 	| for term times program ; program
     If 		| if formula program ; program
-    Empty 	|
+    End 	| end
 
 expression ::= term | formula
 
@@ -15,18 +15,19 @@ formula ::=
     LT 		| term lt  term
     GTE 	| term gte term
     LTE 	| term lte term
-    Equal   | term == term
+    Equal   | term eq term
     True    | true
     False   | false
 
 term ::= 
     Plus    | term + term
     Minus   | term - term
+    Factor  | factor
 
 factor ::= number | variable
     Mult 	| term * term
     Div 	| term / term
-    Power 	| term ** term
+    Power 	| term ^ term
     Mod 	| term % term
     Number  | (0[1-9][0-9]*)
     Variable| [a-z][A-Za-z]* 
