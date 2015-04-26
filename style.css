@@ -15,21 +15,21 @@ body {
 #output {
 	text-align: center;
 	width: 300px;
-	height: 100px;
+	height: 215px;
 	border-width: 1px;
     border-color: #000000;
 }
 
 #bnf_text {
 	width: 400px;
-    height: 510px;
+    height: 515px;
     border-width: 1px;
     border-color: #000000;
 }
 
 #examples {
-	width: 500px;
-	height: 160px;
+	width: 600px;
+	height: 515px;
 	border-width: 1px;
     border-color: #000000;
 

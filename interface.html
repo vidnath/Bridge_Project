@@ -54,25 +54,51 @@ var procParse = function () {
 		<td>
 			<h4>Examples</h4>
 					<textarea id="examples">
-	# Anything behind the double pound sign is a comment, don't input it!
+## Anything behind the double pound sign is a comment, don't input it!
+## You can just copy/paste the examples and run them, or try your own from them!
 
-	print 1+1					## outputs 2
-	one = 1; print one + one + 1			## outputs 3
-	print true or false 				## outputs true
-	print true and false 				## outputs false, why?
-	foo = 1; bar = foo + 1; print foo + bar		## outputs 3
-	if 4*4 gt 2^3 print 4*4*1; print 2^3*1		## outputs 16,8
-	for 5 times print 1+2; vidhu = 10; print vidhu	## outputs 3,3,3,3,3,10
+## Term/Factor examples
+print 1 + 9           ## These examples are all basic
+print 2 - 8           ## arithmetic, so they should output
+print 3 * 7           ## exactly what you would expect.
+print 4 / 6           ## Notice the decimal cutoff after around 15 digits.
+print 5 ^ 5   
+print 6 % 4           ## "%" just returns the remainder from division
+
+## Formula examples
+print true               ## These formulas all use the logical primitives
+print true and false     ## like true and false. Everything here
+print true or false      ## will either have those two in them or
+print not false          ## will result in them being true.
+print 1 gt 3             ## Notice here we go back to numbers.
+print 5 lt 10            ## That's because you can't say something like
+print 12 ge 12           ## "true is less than equal to not false".
+print 101 le 100         ## That's just cray.
+
+## Program examples
+x = 1; print x                              ## Notice that the "=" implies the Assign.
+v = 10^2; print v                           ## You can do multiple Assigns
+vidhu = 1; nath = 2; print vidhu - nath     ## Variables can be named
+cat = 1+1; dog = 2+2; print cat + dog       ## pretty much anything.
+if true and false print 1; print 2          ## If statements only work when
+if true or false print 1; print 2           ## the condition is true.
+for 3 times print 1; end                    ## For statements (loops) are used to
+x = 1; for 3 times print x; print 0         ## iterate something some amount of times
+
+## Known Bugs:
+## Can't assign truth values to variables and use logical operators
+## Can't have multiple if statements or multiple for loops inside each other
+## Can't assign variables to decimal numbers
+## Can't assign variables with names beginning with other choices
 					</textarea>
 		</td>
 
 		<td>
 			<h4 align="center">BNF - Language Syntax</h4>
 			<textarea id="bnf_text">
-
 Program ::=
     Print | print `Expression
-    Assign | $([a-z][A-Za-z]*)$ = `Expression ; `Program
+    Assign | $([a-z][A-Za-z]*)$ = `Term ; `Program
     If | if `Formula `Program ; `Program
     For | for `Term times `Program ; `Program
     End | end
@@ -112,9 +138,11 @@ Factor ::=
 	</tr>
 
 </table>
+<hr>
 
 <div>
-	<h4>Abstract Syntax</h4>
+	<h3>Abstract Syntax</h3>
+    <p>Abstract syntax, often stored in "trees", is the intermediary between typed user code and the tokenized code. The parser takes the tokens to make the abstract syntax, and the interpreter relies on the abstract syntax to interpret - and essentially run - the code. Check it out below!</p>
 		<textarea id="abs_syn" placeholder="Abstract Syntax Trees will appear here..."></textarea>
 </div>
 

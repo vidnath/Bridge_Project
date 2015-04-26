@@ -232,7 +232,7 @@ var execute = function(env,e) {
                 var e1 = child[1];
                 var p = child[2];
 
-                var res = eval_expression(env, e1);
+                var res = eval_term(env, e1);
 
                 env[v] = res;
                 var o = execute(env,p);

@@ -1,13 +1,13 @@
-program ::= number | variable
+Program ::=
     Assign 	| assign variable := expression ; program
     Print 	| print expression
     For 	| for term times program ; program
     If 		| if formula program ; program
     End 	| end
 
-expression ::= term | formula
+Expression ::= term | formula
 
-formula ::=
+Formula ::=
     And 	| formula and formula
     Or 		| formula or formula
     Not 	| not formula
@@ -19,12 +19,12 @@ formula ::=
     True    | true
     False   | false
 
-term ::= 
+Term ::= 
     Plus    | term + term
     Minus   | term - term
     Factor  | factor
 
-factor ::= number | variable
+Factor ::= number | variable
     Mult 	| term * term
     Div 	| term / term
     Power 	| term ^ term
