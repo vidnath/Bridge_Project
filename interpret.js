@@ -210,6 +210,7 @@ var eval_expression = function(env,e) {
     if (typeof e === Node) {
 
         for (var key in e) {
+
             if (key == "Term") {
                 var child = e[key][0];
                 outp = eval_term(env,child);
@@ -229,7 +230,6 @@ var eval_expression = function(env,e) {
 
 	return outp;
 };
-
 
 var execute = function(env,e) {
     //console.log(env);
@@ -254,7 +254,7 @@ var execute = function(env,e) {
                 var e1 = child[1];
                 var p = child[2];
 
-                var res = eval_term(env, e1);
+                var res = eval_expression(env, e1);
 
                 env[v] = res;
                 var o = execute(env,p);

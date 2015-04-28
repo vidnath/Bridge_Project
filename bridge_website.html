@@ -1,17 +1,17 @@
 <!DOCTYPE <!DOCTYPE html>
 <html>
 <head>
-	<title>Bridge: Programming, Simplified</title>
-	<h2 id="main">Welcome to the Bridge Programming Langauge!</h2>
-	<link rel="stylesheet" type="text/css" href="style.css">
+    <title>Bridge: Programming, Simplified</title>
+    <h2 id="main">Welcome to the Bridge Programming Langauge!</h2>
+    <link rel="stylesheet" type="text/css" href="style.css">
 
-	<script src="underscore.js"></script>
+    <script src="underscore.js"></script>
     <script src="uxadt.js"></script>
     <script src="imparse.js"></script>
-    <script src="default.js"></script>
     <script src="interpret.js"></script>
 
     <script type="text/javascript">
+var I = imparse;
 
 var process = function () {
     var str = document.getElementById('bnf_text').value;
@@ -24,7 +24,6 @@ var procParse = function () {
     var str = document.getElementById('user_input').value;
     var tree = I.parser(grammar, str);
 
-    //alert(typeof tree);
     if (typeof tree == "string") {
         document.getElementById('abs_syn').innerHTML = tree;
     } else {
@@ -40,20 +39,20 @@ var procParse = function () {
 
 <body>
 <table>
-	<tr>
-		<td>
-		<h3>Write your code here!</h3>
-		<textarea id="user_input" placeholder="Type code here..."></textarea>
-		<br>
-		<button onclick="process();">Make the Magic Happen</button>
+    <tr>
+        <td>
+        <h3>Write your code here!</h3>
+        <textarea id="user_input" placeholder="Type code here..."></textarea>
+        <br>
+        <button onclick="process();">Make the Magic Happen</button>
 
-		<h3>Output</h3>
-		<textarea id="output"></textarea>
-	</td>
+        <h3>Output</h3>
+        <textarea id="output"></textarea>
+    </td>
 
-		<td>
-			<h4>Examples</h4>
-					<textarea id="examples">
+        <td>
+            <h4>Examples</h4>
+                    <textarea id="examples">
 ## Anything behind the double pound sign is a comment, don't input it!
 ## You can just copy/paste the examples and run them, or try your own from them!
 
@@ -72,8 +71,12 @@ print true or false      ## will either have those two in them or
 print not false          ## will result in them being true.
 print 1 gt 3             ## Notice here we go back to numbers.
 print 5 lt 10            ## That's because you can't say something like
-print 12 ge 12           ## "true is less than equal to not false".
-print 101 le 100         ## That's just cray.
+print 12 ge 12           ## "true is less than equal to not false";
+print 101 le 100         ## that's just cray.
+
+## try out a few more complicated examples
+print true and not false or true
+print not true and not false or 9*9 eq 81 and not false and 10 gt 4
 
 ## Program examples
 x = 1; print x                              ## Notice that the "=" implies the Assign.
@@ -85,28 +88,30 @@ if true or false print 1; print 2           ## the condition is true.
 for 3 times print 1; end                    ## For statements (loops) are used to
 x = 1; for 3 times print x; print 0         ## iterate something some amount of times
 
-## Known Bugs:
-## Can't assign truth values to variables and use logical operators
-## Can't have multiple if statements or multiple for loops inside each other
-## Can't assign variables to decimal numbers
-## Can't assign variables with names beginning with other choices
-					</textarea>
-		</td>
+## try out a more complex example
+x = "done"; for 2 times if 1 lt 2 if 2 lt 3 print "this"; print "repeats"; print "twice"; print x
 
-		<td>
-			<h4 align="center">BNF - Language Syntax</h4>
-			<textarea id="bnf_text">
+## Known Bugs:
+## String cannot have spaces or any characters other than the alphabet in them
+## Can't assign decimal numbers to variables
+## Can't assign variables with names beginning with other choices
+                    </textarea>
+        </td>
+
+        <td>
+            <h4 align="center">BNF - Language Syntax</h4>
+            <textarea id="bnf_text">
 Program ::=
     Print | print `Expression
-    Assign | $([a-z][A-Za-z]*)$ = `Term ; `Program
+    Assign | $([a-z][A-Za-z]*)$ = `Expression ; `Program
     If | if `Formula `Program ; `Program
     For | for `Term times `Program ; `Program
     End | end
     
-
 Expression ::= 
     Formula | `Formula
     Term | `Term
+    String | """ $([A-Za-z][A-Za-z]*)$ """
 
 Formula ::=
     And | `Formula and `Formula
@@ -135,21 +140,25 @@ Factor ::=
     Mod | `Factor "%" `Factor
     Number | $(0|[1-9][0-9]*)$
     Variable | $([a-z][A-Za-z]*)$
-					</textarea>
-		</td>
-
-	</tr>
-
+                    </textarea>
+        </td>
+    </tr>
 </table>
 <hr>
 
-<div>
-	<h3>Abstract Syntax</h3>
+<div align="center">
+    <h3>Abstract Syntax</h3>
     <p>Abstract syntax, often stored in "trees", is the intermediary between typed user code and the tokenized code. The parser takes the tokens to make the abstract syntax, and the interpreter relies on the abstract syntax to interpret - and essentially run - the code. Check it out below!</p>
-		<textarea id="abs_syn" placeholder="Abstract Syntax Trees will appear here..."></textarea>
+        <textarea id="abs_syn" placeholder="Abstract Syntax Trees will appear here..."></textarea>
 </div>
 
+<div><br></div>
+<div><br></div>
 
+<h4>Acknowledgements</h4>
+<h5>Special thanks to my advisor, Andrei Lapets, for his guidance and work on the UxADT suite; to Eric Dunton for his valuable help; and Ellie Vial for her work on Imparse. Thank you to the Kilachand Honors College of Boston University for letting me pursue this project.</h5>
+
+<h6>Copyright &copy 2015 by Vidhu Nath</h6>
 
 </body>
 </html>
