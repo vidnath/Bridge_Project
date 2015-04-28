@@ -13,6 +13,7 @@ var _ = null;
 Leaf = String;
 Node = "object";  // specific Object-type reference
 
+// evaluate the Term production
 var eval_term = function(env, e) {
     if (typeof e === Node) {
 
@@ -35,6 +36,7 @@ var eval_term = function(env, e) {
                 return v1 - v2;
             }
 
+            // calls separate eval_factor function
             if (key == "Factor") {
                 var e1 = child[0];
                 return eval_factor(env, e1);
@@ -45,7 +47,7 @@ var eval_term = function(env, e) {
     return null;
 };
 
-
+// separate due to need for precedence in operations
 var eval_factor = function(env,e) {
     if (typeof e === Node) {
 
@@ -105,6 +107,7 @@ var eval_factor = function(env,e) {
     return null;
 };
 
+// contains the formula production
 var eval_formula = function(env,e) {
 	if (typeof e === Node) {
 
@@ -136,6 +139,7 @@ var eval_formula = function(env,e) {
     }            
 };
 
+// same with factor, component allows for precedence in logical operations
 var eval_component = function(env, e) {
     if (typeof e === Node) {
 
@@ -204,6 +208,7 @@ var eval_component = function(env, e) {
     return null;
 };
 
+// evaluate for either term, formula, or strings
 var eval_expression = function(env,e) {
     var outp;
 
@@ -231,6 +236,7 @@ var eval_expression = function(env,e) {
 	return outp;
 };
 
+// execute the program choices
 var execute = function(env,e) {
     //console.log(env);
 
@@ -299,6 +305,8 @@ var execute = function(env,e) {
     }
 };
 
+// final function, to run the entire interpreter
+// and output the results as strings
 var interpret = function(env, e) {
     var outp = execute(env,e);
     outp = String(outp);

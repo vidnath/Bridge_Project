@@ -47,7 +47,7 @@ var procParse = function () {
         <button onclick="process();">Make the Magic Happen</button>
 
         <h3>Output</h3>
-        <textarea id="output"></textarea>
+        <textarea id="output" placeholder="Output will be here..."></textarea>
     </td>
 
         <td>
@@ -88,7 +88,7 @@ if true or false print 1; print 2           ## the condition is true.
 for 3 times print 1; end                    ## For statements (loops) are used to
 x = 1; for 3 times print x; print 0         ## iterate something some amount of times
 
-## try out a more complex example
+## try out a more complicated examples
 x = "done"; for 2 times if 1 lt 2 if 2 lt 3 print "this"; print "repeats"; print "twice"; print x
 
 ## Known Bugs:
@@ -146,10 +146,13 @@ Factor ::=
 </table>
 <hr>
 
-<div align="center">
-    <h3>Abstract Syntax</h3>
-    <p>Abstract syntax, often stored in "trees", is the intermediary between typed user code and the tokenized code. The parser takes the tokens to make the abstract syntax, and the interpreter relies on the abstract syntax to interpret - and essentially run - the code. Check it out below!</p>
-        <textarea id="abs_syn" placeholder="Abstract Syntax Trees will appear here..."></textarea>
+<div>
+    <h3 align="center">Abstract Syntax</h3>
+
+    <p>Abstract syntax, often stored in "trees", is the intermediary between typed user code and the tokenized code. The parser takes the tokens to make the abstract syntax, and the interpreter relies on the abstract syntax to interpret - and essentially run - the code. The ordering of the different choices is due to the language syntax detailed by the BNF. Check it out below!</p>
+
+    <div align="center">
+        <textarea id="abs_syn" placeholder="Abstract Syntax Trees will appear here..."></textarea></div>
 </div>
 
 <div><br></div>
