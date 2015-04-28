@@ -6,15 +6,16 @@ Description: This JS file contains the interpreter used for the Bridge
 
 */
 
+// set the _ to a null for UxADT to run properly
 var _ = null;
 
+// for easy comparisons later
 Leaf = String;
-Node = "object";
+Node = "object";  // specific Object-type reference
 
 var eval_term = function(env, e) {
     if (typeof e === Node) {
 
-        //for(var key in e)
         for (var key in e) {
             var child = e[key]
 
@@ -127,9 +128,24 @@ var eval_formula = function(env,e) {
                 return v1 || v2;
             }
 
+            if (key == "Component") {
+                var e1 = child[0];
+                return eval_component(env, e1);
+            }
+        }
+    }            
+};
+
+var eval_component = function(env, e) {
+    if (typeof e === Node) {
+
+        //for(var key in e)
+        for (var key in e) {
+            var child = e[key];
+
             if (key == "Not") {
                 var e1 = child[0];
-                var v1 = eval_formula(env,e1);
+                var v1 = eval_component(env,e1);
                 return !v1;
             }
 
@@ -184,8 +200,9 @@ var eval_formula = function(env,e) {
             return false;
         }
     }
-};
 
+    return null;
+};
 
 var eval_expression = function(env,e) {
     var outp;
@@ -199,8 +216,13 @@ var eval_expression = function(env,e) {
             }
 
             if (key == "Formula") {
-                var child = e[key][0]
+                var child = e[key][0];
                 outp = eval_formula(env,child);
+            }
+
+            if (key == "String") {
+                var child = e[key][0];
+                outp = String(child);
             }
         }
     }
@@ -279,5 +301,11 @@ var execute = function(env,e) {
 
 var interpret = function(env, e) {
     var outp = execute(env,e);
+    outp = String(outp);
+
+    // fixes the return of an extra "," when program ends
+    if (outp[outp.length-1] == ",")
+        outp = outp.substring(0,outp.length-1);
+
     return outp;
 };

@@ -10,11 +10,14 @@ Expression ::= term | formula
 Formula ::=
     And 	| formula and formula
     Or 		| formula or formula
-    Not 	| not formula
-    GT 		| term gt term
-    LT 		| term lt  term
-    GTE 	| term gte term
-    LTE 	| term lte term
+    Component | component
+
+Component ::=
+    Not     | not formula
+    GT      | term gt term
+    LT      | term lt  term
+    GTE     | term gte term
+    LTE     | term lte term
     Equal   | term eq term
     True    | true
     False   | false
